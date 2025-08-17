@@ -23,14 +23,22 @@ const BillerBarcode = () => {
 
   return (
     <div className='px-4'>
+      <div className='flex justify-center'>
+        <h1 className='text-2xl font-semibold'>Generator Biller Barcode</h1>
+      </div>
       <FormProvider {...formContext}>
-        <form noValidate onSubmit={formContext.handleSubmit(submitForm)}>
-          <h1>Barcode Generator</h1>
-          <BillerBarcodeFormFields />
-          <Button type='submit' className={'mt-4'}>
-            Generate Barcode
-          </Button>
-          {barcodeValue && <BarcodePreview value={barcodeValue} />}
+        <form
+          noValidate
+          onSubmit={formContext.handleSubmit(submitForm)}
+          className='mt-4'
+        >
+          <BarcodePreview value={barcodeValue} />
+          <div className={'flex flex-col md:items-center mt-4'}>
+            <BillerBarcodeFormFields />
+            <Button type='submit' className={'mt-4'}>
+              Generate Barcode
+            </Button>
+          </div>
         </form>
       </FormProvider>
     </div>
