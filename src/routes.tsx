@@ -8,6 +8,10 @@ export const router = createBrowserRouter([
     Component: () => <BillerBarcode />,
   },
   {
+    path: '/biller-barcode',
+    Component: () => <BillerBarcode />,
+  },
+  {
     path: '/cheque-barcode',
     Component: () => <ChequeBarcode />,
   },
