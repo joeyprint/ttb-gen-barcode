@@ -33,7 +33,7 @@ export function useGenerateBarcode() {
     if (barcode) {
       const dataUrl = barcode.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = `${type}-${barcodeValue}.png`;
+      link.download = `${type}-${barcodeValue.replaceAll('\x0d', '')}.png`;
       link.href = dataUrl;
       link.click();
     }
