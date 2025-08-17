@@ -1,9 +1,8 @@
+import { Button } from '@/components/ui/button';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useBarcodeBiller } from '../../hooks/useBarcodeBiller';
 import BarcodePreview from '../../components/BarcodePreview';
-import { Input } from '@/components/ui/input';
-import { FormProvider, useForm } from 'react-hook-form';
 import BillerBarcodeFormFields from './BillerBarcodeFormFields';
-import { Button } from '@/components/ui/button';
 
 const BillerBarcode = () => {
   const { barcodeValue, generateBarcode } = useBarcodeBiller();
@@ -13,7 +12,13 @@ const BillerBarcode = () => {
   });
 
   const submitForm = (formValues: any) => {
-    console.log('formValues', formValues);
+    const { taxId, ref1, ref2, amount } = formValues;
+    const taxIdWithSuffix = `${taxId}00`;
+    const amountWithoutDecimal =
+      amount !== '' ? Number(amount).toFixed(2).replace('.', '') : '';
+
+    const barcodeData = `|${taxIdWithSuffix}\x0d${ref1}\x0d${ref2}\x0d${amountWithoutDecimal}`;
+    generateBarcode(barcodeData);
   };
 
   return (
@@ -25,11 +30,6 @@ const BillerBarcode = () => {
           <Button type='submit' className={'mt-4'}>
             Generate Barcode
           </Button>
-          <Input
-            type='text'
-            placeholder='Enter text or number'
-            onChange={(e) => generateBarcode(e.target.value)}
-          />
           {barcodeValue && <BarcodePreview value={barcodeValue} />}
         </div>
       </form>
