@@ -1,11 +1,13 @@
-import BarcodePreview from '@/components/BarcodePreview';
-import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import ChequeBarcodeFormFields from './ChequeBarcodeFormFields';
 import { Button } from '@/components/ui/button';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useGenerateBarcode } from '@/hooks/useGenerateBarcode';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import BarcodePreview from '@/components/BarcodePreview';
+import ChequeBarcodeFormFields from './ChequeBarcodeFormFields';
 
 const ChequeBarcode = () => {
+  const navigate = useNavigate();
   const [barcodeValue, setBarcodeBillerValue] = useState('');
   const { generateChequeBarcode, downloadBarcode } = useGenerateBarcode();
 
@@ -26,8 +28,15 @@ const ChequeBarcode = () => {
     setBarcodeBillerValue(barcodeData);
   };
 
+  const goToHomePage = () => {
+    navigate('/');
+  };
+
   return (
     <div className='px-4'>
+      <Button variant={'outline'} onClick={goToHomePage}>
+        Back to Home
+      </Button>
       <div className='flex justify-center'>
         <h1 className='text-2xl font-semibold'>Generator Cheque Barcode</h1>
       </div>

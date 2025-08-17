@@ -1,11 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useGenerateBarcode } from '@/hooks/useGenerateBarcode';
+import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import BarcodePreview from '@/components/BarcodePreview';
 import BillerBarcodeFormFields from './BillerBarcodeFormFields';
 
 const BillerBarcode = () => {
+  const navigate = useNavigate();
   const [barcodeValue, setBarcodeBillerValue] = useState('');
   const { generateBillerBarcode, downloadBarcode } = useGenerateBarcode();
 
@@ -19,8 +21,15 @@ const BillerBarcode = () => {
     setBarcodeBillerValue(barcodeData);
   };
 
+  const goToHomePage = () => {
+    navigate('/');
+  };
+
   return (
     <div className='px-4'>
+      <Button variant={'outline'} onClick={goToHomePage}>
+        Back to Home
+      </Button>
       <div className='flex justify-center'>
         <h1 className='text-2xl font-semibold'>Generator Biller Barcode</h1>
       </div>
