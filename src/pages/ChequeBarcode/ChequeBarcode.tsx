@@ -41,7 +41,11 @@ const ChequeBarcode = () => {
           <div className={'flex flex-col md:items-center mt-4'}>
             <ChequeBarcodeFormFields />
             <div className='flex gap-4'>
-              <Button type='submit' className={'mt-4'}>
+              <Button
+                type='submit'
+                disabled={!formContext.formState.isValid}
+                className={'mt-4'}
+              >
                 Generate Barcode
               </Button>
               <Button
