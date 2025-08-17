@@ -33,11 +33,11 @@ const ChequeBarcode = () => {
   };
 
   return (
-    <div className='px-4'>
+    <div className='p-4'>
       <Button variant={'outline'} onClick={goToHomePage}>
         Back to Home
       </Button>
-      <div className='flex justify-center'>
+      <div className='flex justify-center mt-4'>
         <h1 className='text-2xl font-semibold'>Generator Cheque Barcode</h1>
       </div>
       <FormProvider {...formContext}>
