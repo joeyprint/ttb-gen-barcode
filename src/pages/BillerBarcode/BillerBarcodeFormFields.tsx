@@ -55,12 +55,7 @@ const BillerBarcodeFormFields = () => {
         <FormTextField
           type='number'
           label={'Amount'}
-          {...register('amount', {
-            pattern: {
-              value: /^\d+$/,
-              message: 'กรุณากรอกจํานวนเงินให้ถูกต้อง',
-            },
-          })}
+          {...register('amount')}
           placeholder='กรุณากรอกจํานวนเงิน'
         />
       </div>
