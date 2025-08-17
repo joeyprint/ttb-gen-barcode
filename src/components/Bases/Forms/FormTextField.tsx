@@ -32,7 +32,7 @@ const FormTextField = <TFieldValues extends FieldValues = FieldValues>(
 
   return (
     <>
-      <Label>{props.label}</Label>
+      <Label className='text-base'>{props.label}</Label>
       <Input
         ref={ref}
         {...props}
@@ -40,7 +40,9 @@ const FormTextField = <TFieldValues extends FieldValues = FieldValues>(
         onChange={handleChange}
         className={cn('mt-2', props.className)}
       />
-      {!!error?.message && <p className='text-red-500'>{error.message}</p>}
+      {!!error?.message && (
+        <p className='text-sm text-red-500 mt-1'>{error.message}</p>
+      )}
     </>
   );
 };
