@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useBarcodeBiller } from '../../hooks/useBarcodeBiller';
+import { useBarcodeBiller } from '@/hooks/useBarcodeBiller';
 import { useState } from 'react';
-import BarcodePreview from '../../components/BarcodePreview';
+import BarcodePreview from '@/components/BarcodePreview';
 import BillerBarcodeFormFields from './BillerBarcodeFormFields';
 
 const BillerBarcode = () => {
