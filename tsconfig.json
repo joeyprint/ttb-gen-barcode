@@ -11,6 +11,10 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "module": "esnext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }
