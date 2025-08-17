@@ -1,11 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useBarcodeBiller } from '../../hooks/useBarcodeBiller';
+import { useState } from 'react';
 import BarcodePreview from '../../components/BarcodePreview';
 import BillerBarcodeFormFields from './BillerBarcodeFormFields';
 
 const BillerBarcode = () => {
-  const { barcodeValue, generateBarcode } = useBarcodeBiller();
+  const [barcodeValue, setBarcodeBillerValue] = useState('');
+  const { generateBarcode } = useBarcodeBiller();
 
   const formContext = useForm({
     mode: 'onTouched',
@@ -13,12 +15,8 @@ const BillerBarcode = () => {
 
   const submitForm = (formValues: any) => {
     const { taxId, ref1, ref2, amount } = formValues;
-    const taxIdWithSuffix = `${taxId}00`;
-    const amountWithoutDecimal =
-      amount !== '' ? Number(amount).toFixed(2).replace('.', '') : '';
-
-    const barcodeData = `|${taxIdWithSuffix}\x0d${ref1}\x0d${ref2}\x0d${amountWithoutDecimal}`;
-    generateBarcode(barcodeData);
+    const barcodeData = generateBarcode(taxId, ref1, ref2, amount);
+    setBarcodeBillerValue(barcodeData);
   };
 
   return (
