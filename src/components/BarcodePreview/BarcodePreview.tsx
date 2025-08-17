@@ -16,7 +16,7 @@ export default function BarcodePreview({ value }: { value?: string }) {
         value={value}
         renderer={'canvas'}
         background='white'
-        className={'w-full sm:w-auto'}
+        className={'w-full md:w-auto max-w-full'}
       />
     </div>
   );
