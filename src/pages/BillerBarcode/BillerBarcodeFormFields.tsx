@@ -5,12 +5,16 @@ const BillerBarcodeFormFields = () => {
   const { register } = useFormContext();
 
   return (
-    <div className='flex'>
+    <div className='flex gap-4'>
       <div className='flex-1'>
         <FormTextField
           label={'เลขประจําตัวผู้เสียภาษี'}
           {...register('taxId', {
             required: true,
+            pattern: {
+              value: /^\d+$/,
+              message: 'กรุณากรอกเป็นตัวเลขเท่านั้น',
+            },
             minLength: {
               value: 13,
               message: 'กรุณากรอกเลขประจําตัวผู้เสียภาษีให้ครบ',
@@ -27,7 +31,6 @@ const BillerBarcodeFormFields = () => {
         <FormTextField
           label={'Ref 1'}
           {...register('ref1', {
-            required: true,
             pattern: {
               value: /^[a-zA-Z0-9]*$/,
               message: 'กรุณากรอก Reference 1 ให้ถูกต้อง',
@@ -40,7 +43,6 @@ const BillerBarcodeFormFields = () => {
         <FormTextField
           label={'Ref 2'}
           {...register('ref2', {
-            required: true,
             pattern: {
               value: /^[a-zA-Z0-9]*$/,
               message: 'กรุณากรอก Reference 2 ให้ถูกต้อง',
@@ -54,7 +56,6 @@ const BillerBarcodeFormFields = () => {
           type='number'
           label={'Amount'}
           {...register('amount', {
-            required: true,
             pattern: {
               value: /^\d+$/,
               message: 'กรุณากรอกจํานวนเงินให้ถูกต้อง',
