@@ -3,6 +3,7 @@ import BarcodePreview from '../../components/BarcodePreview';
 import { Input } from '@/components/ui/input';
 import { FormProvider, useForm } from 'react-hook-form';
 import BillerBarcodeFormFields from './BillerBarcodeFormFields';
+import { Button } from '@/components/ui/button';
 
 const BillerBarcode = () => {
   const { barcodeValue, generateBarcode } = useBarcodeBiller();
@@ -21,6 +22,9 @@ const BillerBarcode = () => {
         <div className='barcode-page'>
           <h1>Barcode Generator</h1>
           <BillerBarcodeFormFields />
+          <Button type='submit' className={'mt-4'}>
+            Generate Barcode
+          </Button>
           <Input
             type='text'
             placeholder='Enter text or number'
