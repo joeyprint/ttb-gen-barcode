@@ -1,4 +1,4 @@
-import { Input } from '@/components/ui/input';
+import FormTextField from '@/components/Bases/Forms/FormTextField';
 import { useFormContext } from 'react-hook-form';
 
 const BillerBarcodeFormFields = () => {
@@ -7,7 +7,8 @@ const BillerBarcodeFormFields = () => {
   return (
     <div className='flex'>
       <div className='flex-1'>
-        <Input
+        <FormTextField
+          label={'เลขประจําตัวผู้เสียภาษี'}
           {...register('taxId', {
             required: true,
             minLength: {
@@ -19,18 +20,48 @@ const BillerBarcodeFormFields = () => {
               message: 'กรุณากรอกเลขประจําตัวผู้เสียภาษี 13 หลัก',
             },
           })}
-          placeholder='Enter tax ID'
-          required
+          placeholder='กรุณากรอกเลขประจําตัวผู้เสียภาษี'
         />
       </div>
       <div className='flex-1'>
-        <Input {...register('ref1')} placeholder='Enter text or number' />
+        <FormTextField
+          label={'Ref 1'}
+          {...register('ref1', {
+            required: true,
+            pattern: {
+              value: /^[a-zA-Z0-9]*$/,
+              message: 'กรุณากรอก Reference 1 ให้ถูกต้อง',
+            },
+          })}
+          placeholder='กรุณากรอกเลขอ้างอิง 1'
+        />
       </div>
       <div className='flex-1'>
-        <Input {...register('ref2')} placeholder='Enter text or number' />
+        <FormTextField
+          label={'Ref 2'}
+          {...register('ref2', {
+            required: true,
+            pattern: {
+              value: /^[a-zA-Z0-9]*$/,
+              message: 'กรุณากรอก Reference 2 ให้ถูกต้อง',
+            },
+          })}
+          placeholder='กรุณากรอกเลขอ้างอิง 2'
+        />
       </div>
       <div className='flex-1'>
-        <Input {...register('amount')} placeholder='Enter text or number' />
+        <FormTextField
+          type='number'
+          label={'Amount'}
+          {...register('amount', {
+            required: true,
+            pattern: {
+              value: /^\d+$/,
+              message: 'กรุณากรอกจํานวนเงินให้ถูกต้อง',
+            },
+          })}
+          placeholder='กรุณากรอกจํานวนเงิน'
+        />
       </div>
     </div>
   );
