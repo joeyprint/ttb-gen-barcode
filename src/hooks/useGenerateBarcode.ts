@@ -1,5 +1,5 @@
-export function useBarcodeBiller() {
-  const generateBarcode = (
+export function useGenerateBarcode() {
+  const generateBillerBarcode = (
     taxId: string,
     ref1?: string,
     ref2?: string,
@@ -27,5 +27,5 @@ export function useBarcodeBiller() {
     }
   };
 
-  return { generateBarcode, downloadBarcode };
+  return { generateBillerBarcode, downloadBarcode };
 }
