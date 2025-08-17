@@ -1,13 +1,15 @@
 import { Button } from '@/components/ui/button';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useBarcodeBiller } from '@/hooks/useBarcodeBiller';
+import { useGenerateBarcode } from '@/hooks/useGenerateBarcode';
+import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import BarcodePreview from '@/components/BarcodePreview';
 import BillerBarcodeFormFields from './BillerBarcodeFormFields';
 
 const BillerBarcode = () => {
+  const navigate = useNavigate();
   const [barcodeValue, setBarcodeBillerValue] = useState('');
-  const { generateBarcode, downloadBarcode } = useBarcodeBiller();
+  const { generateBillerBarcode, downloadBarcode } = useGenerateBarcode();
 
   const formContext = useForm({
     mode: 'onTouched',
@@ -15,13 +17,20 @@ const BillerBarcode = () => {
 
   const submitForm = (formValues: any) => {
     const { taxId, ref1, ref2, amount } = formValues;
-    const barcodeData = generateBarcode(taxId, ref1, ref2, amount);
+    const barcodeData = generateBillerBarcode(taxId, ref1, ref2, amount);
     setBarcodeBillerValue(barcodeData);
   };
 
+  const goToHomePage = () => {
+    navigate('/');
+  };
+
   return (
-    <div className='px-4'>
-      <div className='flex justify-center'>
+    <div className='p-4'>
+      <Button variant={'outline'} onClick={goToHomePage}>
+        Back to Home
+      </Button>
+      <div className='flex justify-center mt-4'>
         <h1 className='text-2xl font-semibold'>Generator Biller Barcode</h1>
       </div>
       <FormProvider {...formContext}>
@@ -34,7 +43,11 @@ const BillerBarcode = () => {
           <div className={'flex flex-col md:items-center mt-4'}>
             <BillerBarcodeFormFields />
             <div className='flex gap-4'>
-              <Button type='submit' className={'mt-4'}>
+              <Button
+                type='submit'
+                disabled={!formContext.formState.isValid}
+                className={'mt-4'}
+              >
                 Generate Barcode
               </Button>
               <Button

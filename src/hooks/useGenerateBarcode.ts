@@ -1,5 +1,5 @@
-export function useBarcodeBiller() {
-  const generateBarcode = (
+export function useGenerateBarcode() {
+  const generateBillerBarcode = (
     taxId: string,
     ref1?: string,
     ref2?: string,
@@ -10,6 +10,17 @@ export function useBarcodeBiller() {
       amount !== '' ? Number(amount).toFixed(2).replace('.', '') : '';
 
     const barcodeData = `|${taxIdWithSuffix}\x0d${ref1}\x0d${ref2}\x0d${amountWithoutDecimal}`;
+    return barcodeData;
+  };
+
+  const generateChequeBarcode = (
+    chequeNo: string,
+    bankCode: string,
+    branchCode: string,
+    accountNo: string,
+  ) => {
+    const chequeNoWithPrefix = `00${chequeNo}`;
+    const barcodeData = `${chequeNoWithPrefix}${bankCode}${branchCode}${accountNo}`;
     return barcodeData;
   };
 
@@ -27,5 +38,5 @@ export function useBarcodeBiller() {
     }
   };
 
-  return { generateBarcode, downloadBarcode };
+  return { generateBillerBarcode, generateChequeBarcode, downloadBarcode };
 }

@@ -1,7 +1,8 @@
-import BillerBarcode from './pages/BillerBarcode';
+import { RouterProvider } from 'react-router/dom';
+import { router } from './routes';
 
 function App() {
-  return <BillerBarcode />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
