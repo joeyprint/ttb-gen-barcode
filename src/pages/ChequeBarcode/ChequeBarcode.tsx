@@ -4,20 +4,27 @@ import { useGenerateBarcode } from '@/hooks/useGenerateBarcode';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import BarcodePreview from '@/components/BarcodePreview';
-import BillerBarcodeFormFields from './BillerBarcodeFormFields';
+import ChequeBarcodeFormFields from './ChequeBarcodeFormFields';
 
-const BillerBarcode = () => {
+const ChequeBarcode = () => {
   const navigate = useNavigate();
   const [barcodeValue, setBarcodeBillerValue] = useState('');
-  const { generateBillerBarcode, downloadBarcode } = useGenerateBarcode();
+  const { generateChequeBarcode, downloadBarcode } = useGenerateBarcode();
 
   const formContext = useForm({
     mode: 'onTouched',
+    defaultValues: { bankCode: '011' },
   });
 
   const submitForm = (formValues: any) => {
-    const { taxId, ref1, ref2, amount } = formValues;
-    const barcodeData = generateBillerBarcode(taxId, ref1, ref2, amount);
+    const { chequeNo, bankCode, branchCode, accountNo } = formValues;
+
+    const barcodeData = generateChequeBarcode(
+      chequeNo,
+      bankCode,
+      branchCode,
+      accountNo,
+    );
     setBarcodeBillerValue(barcodeData);
   };
 
@@ -31,7 +38,7 @@ const BillerBarcode = () => {
         Back to Home
       </Button>
       <div className='flex justify-center mt-4'>
-        <h1 className='text-2xl font-semibold'>Generator Biller Barcode</h1>
+        <h1 className='text-2xl font-semibold'>Generator Cheque Barcode</h1>
       </div>
       <FormProvider {...formContext}>
         <form
@@ -41,7 +48,7 @@ const BillerBarcode = () => {
         >
           <BarcodePreview value={barcodeValue} />
           <div className={'flex flex-col md:items-center mt-4'}>
-            <BillerBarcodeFormFields />
+            <ChequeBarcodeFormFields />
             <div className='flex gap-4'>
               <Button
                 type='submit'
@@ -55,7 +62,7 @@ const BillerBarcode = () => {
                 variant={'outline'}
                 disabled={barcodeValue === ''}
                 className={'mt-4'}
-                onClick={() => downloadBarcode(barcodeValue, 'BILLER')}
+                onClick={() => downloadBarcode(barcodeValue, 'CHEQUE')}
               >
                 Download Barcode
               </Button>
@@ -67,4 +74,4 @@ const BillerBarcode = () => {
   );
 };
 
-export default BillerBarcode;
+export default ChequeBarcode;

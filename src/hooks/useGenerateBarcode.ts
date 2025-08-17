@@ -20,11 +20,12 @@ export function useGenerateBarcode() {
     accountNo: string,
   ) => {
     const chequeNoWithPrefix = `00${chequeNo}`;
-    const barcodeData = `${chequeNoWithPrefix}${bankCode}${branchCode}${accountNo}`;
+    const accountNoWithSuffix = `${accountNo}01`;
+    const barcodeData = `${chequeNoWithPrefix}${bankCode}${branchCode}${accountNoWithSuffix}`;
     return barcodeData;
   };
 
-  const downloadBarcode = () => {
+  const downloadBarcode = (barcodeValue: string, type: BarcodeType) => {
     const barcode = document.getElementById(
       'barcode-preview',
     ) as HTMLCanvasElement;
@@ -32,7 +33,7 @@ export function useGenerateBarcode() {
     if (barcode) {
       const dataUrl = barcode.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = 'biller-barcode.png';
+      link.download = `${type}-${barcodeValue}.png`;
       link.href = dataUrl;
       link.click();
     }
@@ -40,3 +41,5 @@ export function useGenerateBarcode() {
 
   return { generateBillerBarcode, generateChequeBarcode, downloadBarcode };
 }
+
+export type BarcodeType = 'BILLER' | 'CHEQUE';
