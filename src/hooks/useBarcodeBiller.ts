@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useBarcodeBiller() {
-  const [barcodeValue, setBarcodeBillerValue] = useState("");
+  const [barcodeValue, setBarcodeBillerValue] = useState('');
 
   const generateBarcode = (input: string) => {
     if (!input.trim()) return;
