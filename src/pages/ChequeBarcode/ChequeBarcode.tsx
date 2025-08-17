@@ -3,19 +3,27 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import ChequeBarcodeFormFields from './ChequeBarcodeFormFields';
 import { Button } from '@/components/ui/button';
+import { useGenerateBarcode } from '@/hooks/useGenerateBarcode';
 
 const ChequeBarcode = () => {
   const [barcodeValue, setBarcodeBillerValue] = useState('');
+  const { generateChequeBarcode, downloadBarcode } = useGenerateBarcode();
 
   const formContext = useForm({
     mode: 'onTouched',
+    defaultValues: { bankCode: '011' },
   });
 
   const submitForm = (formValues: any) => {
-    // const { chequeNo, bankCode, branchCode, accountNumber } = formValues;
+    const { chequeNo, bankCode, branchCode, accountNo } = formValues;
 
-    setBarcodeBillerValue('test');
-    console.log('formValues', formValues);
+    const barcodeData = generateChequeBarcode(
+      chequeNo,
+      bankCode,
+      branchCode,
+      accountNo,
+    );
+    setBarcodeBillerValue(barcodeData);
   };
 
   return (
@@ -41,7 +49,7 @@ const ChequeBarcode = () => {
                 variant={'outline'}
                 disabled={barcodeValue === ''}
                 className={'mt-4'}
-                // onClick={downloadBarcode}
+                onClick={downloadBarcode}
               >
                 Download Barcode
               </Button>

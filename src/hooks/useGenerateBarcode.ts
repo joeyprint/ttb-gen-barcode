@@ -13,6 +13,17 @@ export function useGenerateBarcode() {
     return barcodeData;
   };
 
+  const generateChequeBarcode = (
+    chequeNo: string,
+    bankCode: string,
+    branchCode: string,
+    accountNo: string,
+  ) => {
+    const chequeNoWithPrefix = `00${chequeNo}`;
+    const barcodeData = `${chequeNoWithPrefix}${bankCode}${branchCode}${accountNo}`;
+    return barcodeData;
+  };
+
   const downloadBarcode = () => {
     const barcode = document.getElementById(
       'barcode-preview',
@@ -27,5 +38,5 @@ export function useGenerateBarcode() {
     }
   };
 
-  return { generateBillerBarcode, downloadBarcode };
+  return { generateBillerBarcode, generateChequeBarcode, downloadBarcode };
 }

@@ -31,12 +31,19 @@ const ChequeBarcodeFormFields = () => {
         <FormTextField
           label={'รหัสธนาคาร'}
           {...register('bankCode', {
+            required: true,
             pattern: {
               value: /^[0-9]*$/,
               message: 'กรุณากรอกรหัสธนาคารให้ถูกต้อง',
             },
-            minLength: 3,
-            maxLength: 3,
+            minLength: {
+              value: 3,
+              message: 'กรุณาระบุรหัสธนาคาร 3 หลัก',
+            },
+            maxLength: {
+              value: 3,
+              message: 'กรุณาระบุรหัสธนาคาร 3 หลัก',
+            },
           })}
           placeholder='กรุณากรอกรหัสธนาคาร'
         />
@@ -45,12 +52,19 @@ const ChequeBarcodeFormFields = () => {
         <FormTextField
           label={'รหัสสาขา'}
           {...register('branchCode', {
+            required: true,
             pattern: {
               value: /^[0-9]*$/,
               message: 'กรุณากรอกรหัสสาขาให้ถูกต้อง',
             },
-            minLength: 4,
-            maxLength: 4,
+            minLength: {
+              value: 4,
+              message: 'กรุณาระบุรหัสสาขา 4 หลัก',
+            },
+            maxLength: {
+              value: 4,
+              message: 'กรุณาระบุรหัสสาขา 4 หลัก',
+            },
           })}
           placeholder='กรุณากรอกรหัสสาขา'
         />
@@ -59,12 +73,19 @@ const ChequeBarcodeFormFields = () => {
         <FormTextField
           label={'เลขที่บัญชี'}
           {...register('accountNo', {
+            required: true,
             pattern: {
               value: /^[0-9]*$/,
               message: 'กรุณากรอกเลขที่บัญชีให้ถูกต้อง',
             },
-            minLength: 10,
-            maxLength: 10,
+            minLength: {
+              value: 10,
+              message: 'กรุณาระบุเลขที่บัญชี 10 หลัก',
+            },
+            maxLength: {
+              value: 10,
+              message: 'กรุณาระบุเลขที่บัญชี 10 หลัก',
+            },
           })}
           placeholder='กรุณากรอกเลขที่บัญชี'
         />
