@@ -1,7 +1,7 @@
-import BarcodePage from './pages/BarcodePage';
+import BillerBarcode from './pages/BillerBarcode';
 
 function App() {
-  return <BarcodePage />;
+  return <BillerBarcode />;
 }
 
 export default App;
