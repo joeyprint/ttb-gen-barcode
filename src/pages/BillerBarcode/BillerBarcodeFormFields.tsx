@@ -5,7 +5,7 @@ const BillerBarcodeFormFields = () => {
   const { register } = useFormContext();
 
   return (
-    <div className='flex gap-4'>
+    <div className='flex flex-col sm:flex-row gap-4'>
       <div className='flex-1'>
         <FormTextField
           label={'เลขประจําตัวผู้เสียภาษี'}

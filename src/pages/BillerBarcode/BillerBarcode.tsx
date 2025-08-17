@@ -22,18 +22,18 @@ const BillerBarcode = () => {
   };
 
   return (
-    <FormProvider {...formContext}>
-      <form noValidate onSubmit={formContext.handleSubmit(submitForm)}>
-        <div className='barcode-page'>
+    <div className='px-4'>
+      <FormProvider {...formContext}>
+        <form noValidate onSubmit={formContext.handleSubmit(submitForm)}>
           <h1>Barcode Generator</h1>
           <BillerBarcodeFormFields />
           <Button type='submit' className={'mt-4'}>
             Generate Barcode
           </Button>
           {barcodeValue && <BarcodePreview value={barcodeValue} />}
-        </div>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </div>
   );
 };
 
