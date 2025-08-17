@@ -13,5 +13,19 @@ export function useBarcodeBiller() {
     return barcodeData;
   };
 
-  return { generateBarcode };
+  const downloadBarcode = () => {
+    const barcode = document.getElementById(
+      'barcode-preview',
+    ) as HTMLCanvasElement;
+
+    if (barcode) {
+      const dataUrl = barcode.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = 'biller-barcode.png';
+      link.href = dataUrl;
+      link.click();
+    }
+  };
+
+  return { generateBarcode, downloadBarcode };
 }

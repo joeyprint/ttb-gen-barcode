@@ -7,7 +7,7 @@ import BillerBarcodeFormFields from './BillerBarcodeFormFields';
 
 const BillerBarcode = () => {
   const [barcodeValue, setBarcodeBillerValue] = useState('');
-  const { generateBarcode } = useBarcodeBiller();
+  const { generateBarcode, downloadBarcode } = useBarcodeBiller();
 
   const formContext = useForm({
     mode: 'onTouched',
@@ -33,9 +33,20 @@ const BillerBarcode = () => {
           <BarcodePreview value={barcodeValue} />
           <div className={'flex flex-col md:items-center mt-4'}>
             <BillerBarcodeFormFields />
-            <Button type='submit' className={'mt-4'}>
-              Generate Barcode
-            </Button>
+            <div className='flex gap-4'>
+              <Button type='submit' className={'mt-4'}>
+                Generate Barcode
+              </Button>
+              <Button
+                type='button'
+                variant={'outline'}
+                disabled={barcodeValue === ''}
+                className={'mt-4'}
+                onClick={downloadBarcode}
+              >
+                Download Barcode
+              </Button>
+            </div>
           </div>
         </form>
       </FormProvider>
