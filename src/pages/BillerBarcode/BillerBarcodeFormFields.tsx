@@ -20,8 +20,8 @@ const BillerBarcodeFormFields = () => {
               message: 'กรุณากรอกเลขประจําตัวผู้เสียภาษีให้ครบ',
             },
             maxLength: {
-              value: 15,
-              message: 'ไม่สามารถกรอกเกิน 15 หลัก',
+              value: 13,
+              message: 'ไม่สามารถกรอกเกิน 13 หลัก',
             },
           })}
           placeholder='กรุณากรอกเลขประจําตัวผู้เสียภาษี'
