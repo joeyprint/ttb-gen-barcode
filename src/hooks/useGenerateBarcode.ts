@@ -1,11 +1,12 @@
 export function useGenerateBarcode() {
   const generateBillerBarcode = (
     taxId: string,
+    suffixTaxId: string,
     ref1?: string,
     ref2?: string,
     amount?: string,
   ) => {
-    const taxIdWithSuffix = `${taxId}00`;
+    const taxIdWithSuffix = `${taxId}${suffixTaxId}`;
     const amountWithoutDecimal =
       amount !== '' ? Number(amount).toFixed(2).replace('.', '') : '';
 

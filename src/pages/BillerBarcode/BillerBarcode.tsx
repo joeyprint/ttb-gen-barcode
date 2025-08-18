@@ -13,11 +13,18 @@ const BillerBarcode = () => {
 
   const formContext = useForm({
     mode: 'onTouched',
+    defaultValues: { suffixTaxId: '00' },
   });
 
   const submitForm = (formValues: any) => {
-    const { taxId, ref1, ref2, amount } = formValues;
-    const barcodeData = generateBillerBarcode(taxId, ref1, ref2, amount);
+    const { taxId, suffixTaxId, ref1, ref2, amount } = formValues;
+    const barcodeData = generateBillerBarcode(
+      taxId,
+      suffixTaxId,
+      ref1,
+      ref2,
+      amount,
+    );
     setBarcodeBillerValue(barcodeData);
   };
 
