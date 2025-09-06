@@ -1,19 +1,42 @@
+import { billerBarcodeSchema } from './Validation/BillerBarcode.validation';
 import { Button } from '@/components/ui/button';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useGenerateBarcode } from '@/hooks/useGenerateBarcode';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import BarcodePreview from '@/components/BarcodePreview';
-import BillerBarcodeFormFields from './BillerBarcodeFormFields';
+import BillerBarcodeFormFields, {
+  BillCategory,
+} from './BillerBarcodeFormFields';
+
+type BillerBarcodeFormValues = {
+  billCategory: { label: string; value: BillCategory };
+  taxId: string;
+  suffixTaxId: string;
+  ref1?: string;
+  ref2?: string;
+  amount?: string;
+};
+
+const defaultBillBarcodeValue = {
+  billCategory: { label: 'Biller', value: BillCategory.Biller },
+  taxId: '',
+  suffixTaxId: '00',
+  ref1: '',
+  ref2: '',
+  amount: '',
+};
 
 const BillerBarcode = () => {
   const navigate = useNavigate();
   const [barcodeValue, setBarcodeBillerValue] = useState('');
   const { generateBillerBarcode, downloadBarcode } = useGenerateBarcode();
 
-  const formContext = useForm({
+  const formContext = useForm<BillerBarcodeFormValues>({
     mode: 'onTouched',
-    defaultValues: { suffixTaxId: '00' },
+    defaultValues: defaultBillBarcodeValue,
+    resolver: zodResolver(billerBarcodeSchema),
   });
 
   const submitForm = (formValues: any) => {
