@@ -8,9 +8,9 @@ export function useGenerateBarcode() {
   ) => {
     const taxIdWithSuffix = `${taxId}${suffixTaxId}`;
     const amountWithoutDecimal =
-      amount !== '' ? Number(amount).toFixed(2).replace('.', '') : '';
+      amount && amount !== '' ? Number(amount).toFixed(2).replace('.', '') : '';
 
-    const barcodeData = `|${taxIdWithSuffix}\x0d${ref1}\x0d${ref2}\x0d${amountWithoutDecimal}`;
+    const barcodeData = `|${taxIdWithSuffix}\x0d${ref1 ?? ''}\x0d${ref2 ?? ''}\x0d${amountWithoutDecimal}`;
     return barcodeData;
   };
 
