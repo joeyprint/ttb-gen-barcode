@@ -2,6 +2,7 @@ import FormSelection from '@/components/Bases/Forms/FormSelection';
 import FormTextField from '@/components/Bases/Forms/FormTextField';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { type BillerBarcodeFormValues } from './BillerBarcode';
 
 export enum BillCategory {
   Biller = 'biller',
@@ -16,19 +17,26 @@ const billerOptions = [
 const ttbTaxId = import.meta.env.VITE_TTB_TAX_ID;
 
 const BillerBarcodeFormFields = () => {
-  const { getValues, setValue, watch, clearErrors } = useFormContext();
+  const { getValues, setValue, watch } =
+    useFormContext<BillerBarcodeFormValues>();
 
   const billCategory = watch('billCategory');
 
   const handleSelectBill = () => {
     const selectedbill = getValues('billCategory');
     const bill = selectedbill?.value ?? '';
-    if (bill === 'biller') {
-      setValue('taxId', '');
+    if (bill === BillCategory.Biller) {
+      setValue('taxId', '', { shouldDirty: false });
       setValue('suffixTaxId', '00');
-    } else if (bill === 'creditCard') {
-      setValue('taxId', ttbTaxId, { shouldDirty: true, shouldValidate: true });
-      setValue('suffixTaxId', '02', { shouldDirty: true });
+      setValue('ref1', '');
+      setValue('ref2', '');
+      setValue('amount', '');
+    } else if (bill === BillCategory.CreditCard) {
+      setValue('taxId', ttbTaxId);
+      setValue('suffixTaxId', '02');
+      setValue('ref1', '');
+      setValue('ref2', '');
+      setValue('amount', '');
     }
   };
 
@@ -47,7 +55,6 @@ const BillerBarcodeFormFields = () => {
 
   useEffect(() => {
     if (billCategory) {
-      clearErrors();
       handleSelectBill();
     }
   }, [billCategory]);
@@ -72,16 +79,17 @@ const BillerBarcodeFormFields = () => {
           name={'taxId'}
           label={'เลขประจําตัวผู้เสียภาษี'}
           placeholder='กรุณากรอกเลขประจําตัวผู้เสียภาษี'
-          disabled={billCategory?.value === 'creditCard'}
+          disabled={billCategory?.value === BillCategory.CreditCard}
+          required
         />
       </div>
       <div className='flex-1 shrink-0 md:basis-[200px]'>
         <FormTextField
           name={'suffixTaxId'}
-          required
           label={'suffix เลขประจําตัวผู้เสียภาษี'}
           placeholder='กรุณากรอก suffix เลขประจําตัวผู้เสียภาษี'
-          disabled={billCategory?.value === 'creditCard'}
+          disabled={billCategory?.value === BillCategory.CreditCard}
+          required
         />
       </div>
       <div className='flex-1 shrink-0 md:basis-[200px]'>
@@ -91,7 +99,7 @@ const BillerBarcodeFormFields = () => {
           placeholder={ref1InputLabel.placeholder}
         />
       </div>
-      {billCategory?.value === 'biller' && (
+      {billCategory?.value === BillCategory.Biller && (
         <div className='flex-1 shrink-0 md:basis-[200px]'>
           <FormTextField
             name={'ref2'}
