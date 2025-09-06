@@ -42,7 +42,6 @@ const BillerBarcode = () => {
   const submitForm =
     ({ getValues }: UseFormReturn<BillerBarcodeFormValues>) =>
     () => {
-      console.log(getValues());
       const { taxId, suffixTaxId, ref1, ref2, amount } = getValues();
       const barcodeData = generateBillerBarcode(
         taxId,
