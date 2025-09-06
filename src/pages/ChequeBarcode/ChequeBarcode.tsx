@@ -62,7 +62,7 @@ const ChequeBarcode = () => {
                 variant={'outline'}
                 disabled={barcodeValue === ''}
                 className={'mt-4'}
-                onClick={downloadBarcode}
+                onClick={() => downloadBarcode(barcodeValue, 'CHEQUE')}
               >
                 Download Barcode
               </Button>

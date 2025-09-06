@@ -89,7 +89,7 @@ const BillerBarcode = () => {
                 type='button'
                 variant={'outline'}
                 disabled={barcodeValue === ''}
-                onClick={downloadBarcode}
+                onClick={() => downloadBarcode(barcodeValue, 'BILLER')}
               >
                 Download Barcode
               </Button>
