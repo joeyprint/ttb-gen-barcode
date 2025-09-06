@@ -10,7 +10,7 @@ import BillerBarcodeFormFields, {
   BillCategory,
 } from './BillerBarcodeFormFields';
 
-type BillerBarcodeFormValues = {
+export type BillerBarcodeFormValues = {
   billCategory: { label: string; value: BillCategory };
   taxId: string;
   suffixTaxId: string;
@@ -19,7 +19,7 @@ type BillerBarcodeFormValues = {
   amount?: string;
 };
 
-const defaultBillBarcodeValue = {
+export const defaultBillBarcodeValue = {
   billCategory: { label: 'Biller', value: BillCategory.Biller },
   taxId: '',
   suffixTaxId: '00',
@@ -42,6 +42,7 @@ const BillerBarcode = () => {
   const submitForm =
     ({ getValues }: UseFormReturn<BillerBarcodeFormValues>) =>
     () => {
+      console.log(getValues());
       const { taxId, suffixTaxId, ref1, ref2, amount } = getValues();
       const barcodeData = generateBillerBarcode(
         taxId,
@@ -75,7 +76,13 @@ const BillerBarcode = () => {
           <div className={'flex flex-col md:items-center mt-4'}>
             <BillerBarcodeFormFields />
             <div className='flex gap-4 mt-4'>
-              <Button type='submit' disabled={!formContext.formState.isValid}>
+              <Button
+                type='submit'
+                disabled={
+                  !formContext.formState.isValid ||
+                  !formContext.formState.dirtyFields.taxId
+                }
+              >
                 Generate Barcode
               </Button>
               <Button

@@ -58,20 +58,26 @@ export const billerBarcodeSchema = z
   .superRefine((data, ctx) => {
     const { billCategory, ref1 } = data;
 
-    if (billCategory.value === BillCategory.CreditCard) {
-      if (ref1 && !NUMBER_REGEX.test(ref1)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: BILLER_ERROR_MESSAGES.FORMATTED_ONLY_NUMBER,
-          path: ['ref1'],
-        });
+    switch (billCategory.value) {
+      case BillCategory.CreditCard: {
+        if (ref1 && !NUMBER_REGEX.test(ref1)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: BILLER_ERROR_MESSAGES.FORMATTED_ONLY_NUMBER,
+            path: ['ref1'],
+          });
+        }
+        if (!ref1 || ref1.length !== 16) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: BILLER_ERROR_MESSAGES.CREDIT_CARD_NOT_MATCHED,
+            path: ['ref1'],
+          });
+        }
+        break;
       }
-      if (!ref1 || ref1.length !== 16) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: BILLER_ERROR_MESSAGES.CREDIT_CARD_NOT_MATCHED,
-          path: ['ref1'],
-        });
-      }
+      case BillCategory.Biller:
+      default:
+        break;
     }
   });
