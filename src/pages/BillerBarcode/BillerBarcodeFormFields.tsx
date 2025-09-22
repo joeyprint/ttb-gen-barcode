@@ -1,17 +1,19 @@
 import FormSelection from '@/components/Bases/Forms/FormSelection';
 import FormTextField from '@/components/Bases/Forms/FormTextField';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { type BillerBarcodeFormValues } from './BillerBarcode';
 
 export enum BillCategory {
   Biller = 'biller',
   CreditCard = 'creditCard',
+  AutoLoan = 'autoLoan',
 }
 
 const billerOptions = [
   { label: 'Biller', value: BillCategory.Biller },
   { label: 'Credit Card Biller', value: BillCategory.CreditCard },
+  { label: 'Auto Biller', value: BillCategory.AutoLoan },
 ];
 
 const ttbTaxId = import.meta.env.VITE_TTB_TAX_ID;
@@ -26,14 +28,20 @@ const BillerBarcodeFormFields = () => {
     const selectedbill = getValues('billCategory');
     const bill = selectedbill?.value ?? '';
     if (bill === BillCategory.Biller) {
-      setValue('taxId', '', { shouldDirty: false });
+      setValue('taxId', '', { shouldDirty: true });
       setValue('suffixTaxId', '00');
       setValue('ref1', '');
       setValue('ref2', '');
       setValue('amount', '');
     } else if (bill === BillCategory.CreditCard) {
-      setValue('taxId', ttbTaxId);
+      setValue('taxId', ttbTaxId, { shouldDirty: true });
       setValue('suffixTaxId', '02');
+      setValue('ref1', '');
+      setValue('ref2', '');
+      setValue('amount', '');
+    } else if (bill === BillCategory.AutoLoan) {
+      setValue('taxId', ttbTaxId, { shouldDirty: true });
+      setValue('suffixTaxId', '00');
       setValue('ref1', '');
       setValue('ref2', '');
       setValue('amount', '');
@@ -63,6 +71,10 @@ const BillerBarcodeFormFields = () => {
     billCategory?.value ?? BillCategory.Biller,
   );
 
+  const isShowRef2 = useMemo(() => {
+    return billCategory?.value !== BillCategory.CreditCard;
+  }, [billCategory]);
+
   return (
     <div className='flex flex-col flex-wrap md:flex-row gap-4 w-full'>
       <div className='flex-1 shrink-0 md:basis-[200px]'>
@@ -79,7 +91,7 @@ const BillerBarcodeFormFields = () => {
           name={'taxId'}
           label={'เลขประจําตัวผู้เสียภาษี'}
           placeholder='กรุณากรอกเลขประจําตัวผู้เสียภาษี'
-          disabled={billCategory?.value === BillCategory.CreditCard}
+          disabled={billCategory?.value !== BillCategory.Biller}
           required
         />
       </div>
@@ -88,7 +100,7 @@ const BillerBarcodeFormFields = () => {
           name={'suffixTaxId'}
           label={'suffix เลขประจําตัวผู้เสียภาษี'}
           placeholder='กรุณากรอก suffix เลขประจําตัวผู้เสียภาษี'
-          disabled={billCategory?.value === BillCategory.CreditCard}
+          disabled={billCategory?.value !== BillCategory.Biller}
           required
         />
       </div>
@@ -99,7 +111,7 @@ const BillerBarcodeFormFields = () => {
           placeholder={ref1InputLabel.placeholder}
         />
       </div>
-      {billCategory?.value === BillCategory.Biller && (
+      {isShowRef2 && (
         <div className='flex-1 shrink-0 md:basis-[200px]'>
           <FormTextField
             name={'ref2'}

@@ -60,6 +60,13 @@ export const billerBarcodeSchema = z
 
     switch (billCategory.value) {
       case BillCategory.CreditCard: {
+        if (!ref1 && ref1?.trim() === '') {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: BILLER_ERROR_MESSAGES.FORMATTED_ONLY_NUMBER,
+            path: ['ref1'],
+          });
+        }
         if (ref1 && !NUMBER_REGEX.test(ref1)) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
@@ -76,6 +83,7 @@ export const billerBarcodeSchema = z
         }
         break;
       }
+      case BillCategory.AutoLoan:
       case BillCategory.Biller:
       default:
         break;
