@@ -76,6 +76,7 @@ export const billerBarcodeSchema = z
         }
         break;
       }
+      case BillCategory.AutoLoan:
       case BillCategory.Biller:
       default:
         break;
