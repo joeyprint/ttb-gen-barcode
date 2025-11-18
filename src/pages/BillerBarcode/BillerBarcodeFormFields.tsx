@@ -50,14 +50,14 @@ const BillerBarcodeFormFields = () => {
       setValue('ref2', '');
       setValue('amount', '');
     } else if (bill === BillCategory.FleetCard) {
-      setValue('taxId', '0107537000017', { shouldDirty: true });
+      setValue('taxId', ttbTaxId, { shouldDirty: true });
       setValue('suffixTaxId', '05');
       setValue('ref1', '');
       setValue('ref2', '695004');
       setValue('amount', '');
     }
     else if (bill === BillCategory.HomeLoan) {
-      setValue('taxId', '0107537000017', { shouldDirty: true });
+      setValue('taxId', ttbTaxId, { shouldDirty: true });
       setValue('suffixTaxId', '03');
       setValue('ref1', '');
       setValue('ref2', '');
