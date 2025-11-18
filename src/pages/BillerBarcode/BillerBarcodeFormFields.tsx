@@ -8,12 +8,16 @@ export enum BillCategory {
   Biller = 'biller',
   CreditCard = 'creditCard',
   AutoLoan = 'autoLoan',
+  FleetCard = 'fleetCard',
+  HomeLoan = 'homeLoan'
 }
 
 const billerOptions = [
   { label: 'Biller', value: BillCategory.Biller },
   { label: 'Credit Card Biller', value: BillCategory.CreditCard },
-  { label: 'Auto Biller', value: BillCategory.AutoLoan },
+  { label: 'Auto Loan Biller', value: BillCategory.AutoLoan },
+  { label: 'Fleet Card Biller', value: BillCategory.FleetCard },
+  { label: 'Home Loan Biller', value: BillCategory.HomeLoan },
 ];
 
 const ttbTaxId = import.meta.env.VITE_TTB_TAX_ID;
@@ -42,6 +46,19 @@ const BillerBarcodeFormFields = () => {
     } else if (bill === BillCategory.AutoLoan) {
       setValue('taxId', ttbTaxId, { shouldDirty: true });
       setValue('suffixTaxId', '00');
+      setValue('ref1', '');
+      setValue('ref2', '');
+      setValue('amount', '');
+    } else if (bill === BillCategory.FleetCard) {
+      setValue('taxId', ttbTaxId, { shouldDirty: true });
+      setValue('suffixTaxId', '05');
+      setValue('ref1', '');
+      setValue('ref2', '695004');
+      setValue('amount', '');
+    }
+    else if (bill === BillCategory.HomeLoan) {
+      setValue('taxId', ttbTaxId, { shouldDirty: true });
+      setValue('suffixTaxId', '03');
       setValue('ref1', '');
       setValue('ref2', '');
       setValue('amount', '');
@@ -91,7 +108,9 @@ const BillerBarcodeFormFields = () => {
           name={'taxId'}
           label={'เลขประจําตัวผู้เสียภาษี'}
           placeholder='กรุณากรอกเลขประจําตัวผู้เสียภาษี'
-          disabled={billCategory?.value !== BillCategory.Biller}
+          disabled={billCategory?.value !== BillCategory.Biller &&
+            billCategory?.value !== BillCategory.FleetCard &&
+            billCategory?.value !== BillCategory.HomeLoan}
           required
         />
       </div>
@@ -100,7 +119,9 @@ const BillerBarcodeFormFields = () => {
           name={'suffixTaxId'}
           label={'suffix เลขประจําตัวผู้เสียภาษี'}
           placeholder='กรุณากรอก suffix เลขประจําตัวผู้เสียภาษี'
-          disabled={billCategory?.value !== BillCategory.Biller}
+          disabled={billCategory?.value !== BillCategory.Biller &&
+            billCategory?.value !== BillCategory.FleetCard &&
+            billCategory?.value !== BillCategory.HomeLoan}
           required
         />
       </div>
